@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/u4m8p1e1
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t fargate-node .
+      - echo Pushing Docker image to ECR...
+      - docker tag fargate-node:latest public.ecr.aws/u4m8p1e1/fargate-node:latest
+      - docker push public.ecr.aws/u4m8p1e1/fargate-node:latest
+  post_build:
+    commands:
+      - echo Build completed on date
+      - echo Creating image definitions file...
+      - echo '[{"name":"node","imageUri":"public.ecr.aws/u4m8p1e1/fargate-node","containerPort":8080}]' > imagedefinitions.json
+
+artifacts:
+  files:
+    - '**/*'
+  secondary-artifacts:
+    imagedefinitions:
+      files:
+        - imagedefinitions.json
