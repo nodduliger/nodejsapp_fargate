@@ -11,15 +11,15 @@ phases:
   build:
     commands:
       - echo Building Docker image...
-      - docker build -t ec2node1 .
+      - docker build -t npm .
       - echo Pushing Docker image to ECR...
-      - docker tag ec2node1:latest public.ecr.aws/j9v3f8u1/ec2node1:latest
-      - docker push public.ecr.aws/j9v3f8u1/ec2node1:latest
+      - docker tag npm:latest public.ecr.aws/j9v3f8u1/npm:latest
+      - docker push public.ecr.aws/j9v3f8u1/npm:latest
   post_build:
     commands:
       - echo Build completed on date
       - echo Creating image definitions file...
-      - echo '[{"name":"node","imageUri":"public.ecr.aws/j9v3f8u1/ec2node1","containerPort":4000}]' > imagedefinitions.json
+      - echo '[{"name":"npm","imageUri":"public.ecr.aws/j9v3f8u1/npm","containerPort":4000}]' > imagedefinitions.json
 
 artifacts:
   files:
