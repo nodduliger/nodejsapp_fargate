@@ -19,7 +19,7 @@ phases:
     commands:
       - echo Build completed on date
       - echo Creating image definitions file...
-      - echo '[{"name":"snode","imageUri":"public.ecr.aws/j9v3f8u1/ec2node1","containerPort":4000}]' > imagedefinitions.json
+      - echo '[{"name":"node","imageUri":"public.ecr.aws/j9v3f8u1/ec2node1","containerPort":4000}]' > imagedefinitions.json
 
 artifacts:
   files:
